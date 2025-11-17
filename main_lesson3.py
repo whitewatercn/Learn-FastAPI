@@ -35,7 +35,7 @@ async def band(band_id: int) -> Band:
 	if band is None:
 		raise HTTPException(status_code=404, detail="Band not found")
 	return band
-	
+
 @app.get('/bands/genre/{genre_name}')
 async def bands_for_genre(genre_name: str) -> list[dict]:
 	# 验证 genre_name 是否有效，但不暴露有效值列表
