@@ -9,4 +9,3 @@ async def index() -> dict[str, str]:
 @app.get("/about")
 async def about() -> str:
 	return "一个记录fastapi学习笔记的网站"
-
