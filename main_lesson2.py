@@ -25,16 +25,31 @@ async def band(band_id: int) -> dict:
 		raise HTTPException(status_code=404, detail="Band not found")
 	return band
 	
+# 查询时如果有错误，提示genre清单有什么
 @app.get('/bands/genre/{genre_name}')
 async def bands_for_genre(genre_name: str) -> list[dict]:
-	# 验证 genre_name 是否有效，但不暴露有效值列表
-	valid_genres = [genre.value for genre in GeneralURLChoices]
-	if genre_name not in valid_genres:
-		raise HTTPException(status_code=404, detail="Genre not found")
-	
 	result = [
 		band for band in BANDS if band['genre'].lower() == genre_name.lower()
 	]
 	if not result:
-		raise HTTPException(status_code=404, detail="No bands found")
+		available_genres = [genre.value for genre in GeneralURLChoices]
+		raise HTTPException(
+			status_code=404, 
+			detail=f"No bands found for genre '{genre_name}'. Available genres: {', '.join(available_genres)}"
+		)
 	return result
+
+# # 查询时如果有错误，不提示是否在genre清单里，只返回报错，避免使用这个api的人发现genre里有什么
+# @app.get('/bands/genre/{genre_name}')
+# async def bands_for_genre(genre_name: str) -> list[dict]:
+# 	# 验证 genre_name 是否有效，但不暴露有效值列表
+# 	valid_genres = [genre.value for genre in GeneralURLChoices]
+# 	if genre_name not in valid_genres:
+# 		raise HTTPException(status_code=404, detail="Genre not found")
+	
+# 	result = [
+# 		band for band in BANDS if band['genre'].lower() == genre_name.lower()
+# 	]
+# 	if not result:
+# 		raise HTTPException(status_code=404, detail="No bands found")
+# 	return result
