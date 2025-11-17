@@ -1,0 +1,22 @@
+POST http://localhost:8000/bands
+Content-Type: application/json
+
+{
+	"name": "old new Band",
+	"genre": "RoCK",
+	"albums": [
+		{
+			"title": "First Album",
+			"release_date": "2000-01-01"
+		},
+		{
+			"title": "Second Album",
+			"release_date": "2003-05-20"
+		}
+	]
+}
+
+
+##
+
+# GET http://localhost:8000/bands?genre=rock
