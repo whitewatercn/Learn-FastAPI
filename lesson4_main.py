@@ -4,7 +4,7 @@
 
 from fastapi import FastAPI, HTTPException
 from enum import Enum
-from schemas_lesson4 import Band, GeneralURLChoices
+from lesson4_schemas import Band, GeneralURLChoices
 
 app = FastAPI()
 

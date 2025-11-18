@@ -1,6 +1,12 @@
+"""
+本节学习query parameter
+以及如何通过get写入数据
+还有pydantic的field_validator装饰器（见schemas）
+"""
+
 from fastapi import FastAPI, HTTPException
 from enum import Enum
-from schemas_lesson3 import Band
+from lesson5_schemas import BandBase, BandCreate, BandWithID, GeneralURLChoices
 
 app = FastAPI()
 
@@ -17,21 +23,31 @@ BANDS= [
 		{'title':'The Dark Side of the Moon', 'release_date':'1973-03-01'},
 		{'title':'Wish You Were Here', 'release_date':'1975-09-12'}
 	]},
-	{'id':4 , 'name':'Wu-Tang Clan', 'genre':'Hip Hop','albums':[
-		{'title':'Enter the Wu-Tang (36 Chambers)', 'release_date':'1993-11-09'},
-		{'title':'Wu-Tang Forever', 'release_date':'1997-06-03'}
-	]},
+	{'id':4 , 'name':'Wu-Tang Clan', 'genre':'Hip Hop','albums':[]}
+
 ]
 
 @app.get("/bands")
-async def bands() -> list[Band]:
-	return [
-		Band(**band) for band in BANDS
-	]
+async def bands(
+	genre:GeneralURLChoices | None = None,
+	has_albums:bool | None = None
+)  -> list[BandWithID]:
+	band_list = [BandWithID(**band) for band in BANDS]
+
+	if genre:
+		return [ band for band in band_list if band.genre.lower() == genre.value ]
+
+	if has_albums is not None:
+		if has_albums:
+			band_list = [ band for band in band_list if len(band.albums) > 0 ]
+		else:
+			band_list = [ band for band in band_list if len(band.albums) == 0 ]
+	
+	return band_list
 
 @app.get("/bands/{band_id}", status_code=200)
-async def band(band_id: int) -> Band:
-	band = next((Band(**band) for band in BANDS if band['id'] == band_id), None)
+async def band(band_id: int) -> BandWithID:
+	band = next((BandWithID(**band) for band in BANDS if band['id'] == band_id), None)
 	if band is None:
 		raise HTTPException(status_code=404, detail="Band not found")
 	return band
@@ -49,3 +65,13 @@ async def bands_for_genre(genre_name: str) -> list[dict]:
 	if not result:
 		raise HTTPException(status_code=404, detail="No bands found")
 	return result
+
+
+@app.post('/bands')
+async def create_band(band_data:BandCreate) -> BandWithID:
+	id = BANDS[-1]['id'] + 1
+	band = BandWithID(id=id, **band_data.model_dump()).model_dump()
+	BANDS.append(band)
+	return band
+	
+
