@@ -1,3 +1,7 @@
+"""
+第一课，学习FastAPI的基础用法
+创建一个最简单的FastAPI应用
+"""
 from fastapi import FastAPI
 
 app = FastAPI()

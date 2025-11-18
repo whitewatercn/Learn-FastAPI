@@ -1,3 +1,7 @@
+"""
+第二课，学习FastAPI的路径参数和枚举
+创建一个包含路径参数和枚举的FastAPI应用
+"""
 from fastapi import FastAPI, HTTPException
 from enum import Enum
 

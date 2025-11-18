@@ -1,3 +1,6 @@
+"""
+第三课，在第二课基础上试用pydantic实现数据验证
+"""
 from fastapi import FastAPI, HTTPException
 from enum import Enum
 from lesson3_schemas import Band
