@@ -26,11 +26,20 @@ BANDS= [
 
 ]
 
+
+"""
+和lesson4_main.py类似，不过这里返回的是BandWithID
+@app.get("/bands/{band_id}", status_code=200)
+@app.get('/bands/genre/{genre_name}')
+这两个同理
+
+"""
 @app.get("/bands")
 async def bands(
 	genre:GeneralURLChoices | None = None,
 	has_albums:bool | None = None
 )  -> list[BandWithID]:
+
 	band_list = [BandWithID(**band) for band in BANDS]
 
 	if genre:
@@ -51,6 +60,9 @@ async def band(band_id: int) -> BandWithID:
 		raise HTTPException(status_code=404, detail="Band not found")
 	return band
 
+
+
+
 @app.get('/bands/genre/{genre_name}')
 async def bands_for_genre(genre_name: str) -> list[dict]:
 	# 验证 genre_name 是否有效，但不暴露有效值列表
@@ -66,6 +78,12 @@ async def bands_for_genre(genre_name: str) -> list[dict]:
 	return result
 
 
+
+
+"""
+增加了一个POST方法用于创建新的band
+使用BandCreate输入，返回BandWithID
+"""
 @app.post('/bands')
 async def create_band(band_data:BandCreate) -> BandWithID:
 	id = BANDS[-1]['id'] + 1

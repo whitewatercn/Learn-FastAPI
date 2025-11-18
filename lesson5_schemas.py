@@ -30,3 +30,6 @@ class BandCreate(BandBase):
 
 class BandWithID(BandBase):
 	id:int
+	"""
+	BandWithID继承了BandBase，并添加了一个id字段，用于表示乐队的唯一标识符
+	"""
