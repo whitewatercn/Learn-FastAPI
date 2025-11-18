@@ -7,18 +7,13 @@ class GeneralURLChoices(Enum):
 	PROGRESSIVE_ROCK = "progressive_rock"
 	HIP_HOP = "hip_hop"
 
-class GeneralChoices(Enum):
-	ROCK = "Rock"
-	PROGRESSIVE_ROCK = "Progressive Rock"
-	HIP_HOP = "Hip_Hop"
-
 class Album(BaseModel):
 	title:str
 	release_date:date
 
 class BandBase(BaseModel):
 	name:str
-	genre:GeneralChoices
+	genre:GeneralURLChoices
 	albums:list[Album] = []
 
 
@@ -27,7 +22,10 @@ class BandCreate(BandBase):
 	@classmethod
 	def title_case_genre(cls, value):
 		return value.title()  # RoCK -> Rock
-	
+	"""
+	BandCreate继承了BandBase，并添加了一个字段验证器，用于在创建Band实例时将genre字段转换为标题格式，也就是首字母大写
+	这里的validator是pydantic validator v2的用法
+	"""
 
 
 class BandWithID(BandBase):

@@ -1,7 +1,6 @@
 """
-本节学习query parameter
-以及如何通过get写入数据
-还有pydantic的field_validator装饰器（见schemas）
+本节进一步学习query parameter以及如何通过post写入数据
+还有pydantic的field_validator装饰器（见lesson5_schemas.py）
 """
 
 from fastapi import FastAPI, HTTPException

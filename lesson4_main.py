@@ -30,11 +30,19 @@ async def bands(
 	genre:GeneralURLChoices | None = None,
 	has_albums:bool | None = None
 )  -> list[Band]:
+	"""	
+	指定genre是GeneralURLChoice或者None，默认None
+	has_albums是bool或者None，默认None
+	这样就可以在/bands?genre=rock&has_albums=true 这样调用
+	为什么括号里写上genre就能当查询式呢？因为FastAPI会自动把函数参数当查询参数处理
+	"""
 	band_list = [Band(**band) for band in BANDS]
 
 	if genre:
 		return [ band for band in band_list if band.genre.lower() == genre.value ]
-
+	"""
+	如果genre有值，就过滤出符合genre的band返回
+	"""
 	if has_albums is not None:
 		if has_albums:
 			band_list = [ band for band in band_list if len(band.albums) > 0 ]

@@ -1,5 +1,7 @@
 # 虚拟环境
 .venv/
 
+# 配置文件
+.vscode/
 # Python 缓存文件
 __pycache__/
