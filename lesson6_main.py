@@ -48,6 +48,9 @@ async def bands(
 
 @app.get("/bands/{band_id}")
 async def band(band_id: Annotated[int, Path(title='The band ID')]) -> BandWithID:
+	"""
+	这里给band_id添加了Path(title='The band ID')，这样在自动生成的swagger文档里会显示"The band ID"说明
+	"""
 	band = next((BandWithID(**band) for band in BANDS if band['id'] == band_id), None)
 	if band is None:
 		raise HTTPException(status_code=404, detail="Band not found")
