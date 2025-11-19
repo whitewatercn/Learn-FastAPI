@@ -44,7 +44,10 @@ class BandCreate(BandBase):
 	@field_validator('genre', mode='before')
 	@classmethod
 	def title_case_genre(cls, value):
-		return value.title()  # RoCK -> Rock
+		# Normalize to enum values used in GeneralChoices
+		if isinstance(value, str):
+			return value.strip().lower().replace(' ', '_')
+		return value
 	
 
 
