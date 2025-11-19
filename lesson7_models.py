@@ -31,6 +31,8 @@ class Album(AlbumBase,table=True):
 	"""
 	Album继承自AlbumBase，并添加了一个id字段作为主键
 	还定义了一个关系band，表示这个专辑属于哪个乐队
+	通过relationship的back_populates参数，和Band模型的albums字段关联起来
+	当操作album时，可以通过album.band操作对应的乐队信息
 	"""
 class BandBase(SQLModel):
 	name:str
@@ -39,7 +41,6 @@ class BandBase(SQLModel):
 
 class BandCreate(BandBase):
 	albums:list[AlbumCreate] | None = None
-
 	@field_validator('genre', mode='before')
 	@classmethod
 	def title_case_genre(cls, value):
@@ -54,4 +55,6 @@ class Band(BandBase, table=True):
 	"""
 	Band继承自BandBase，并添加了一个id字段作为主键
 	还定义了一个关系albums，表示这个乐队有哪些专辑
+	通过relationship的back_populates参数，和Album模型的band字段关联起来
+	当操作band时，可以通过band.albums操作对应的专辑列表
 	"""
