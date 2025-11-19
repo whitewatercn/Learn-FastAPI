@@ -1,3 +1,5 @@
+
+
 from datetime import date
 from enum import Enum
 from pydantic import BaseModel, field_validator
@@ -6,11 +8,6 @@ class GeneralURLChoices(Enum):
 	ROCK = "rock"
 	PROGRESSIVE_ROCK = "progressive_rock"
 	HIP_HOP = "hip_hop"
-
-class GeneralChoices(Enum):
-	ROCK = "Rock"
-	PROGRESSIVE_ROCK = "Progressive Rock"
-	HIP_HOP = "Hip_Hop"
 
 class Album(BaseModel):
 	title:str

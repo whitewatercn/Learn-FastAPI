@@ -43,7 +43,7 @@ async def bands(
 	band_list = [BandWithID(**band) for band in BANDS]
 
 	if genre:
-		return [ band for band in band_list if band.genre.lower() == genre.value ]
+		return [ band for band in band_list if band.genre.value.lower() == genre.value.lower() ]
 
 	if has_albums is not None:
 		if has_albums:
@@ -78,8 +78,6 @@ async def bands_for_genre(genre_name: str) -> list[dict]:
 	return result
 
 
-
-
 """
 增加了一个POST方法用于创建新的band
 使用BandCreate输入，返回BandWithID
@@ -91,4 +89,3 @@ async def create_band(band_data:BandCreate) -> BandWithID:
 	BANDS.append(band)
 	return band
 	
-
