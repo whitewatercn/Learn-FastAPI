@@ -35,7 +35,7 @@ async def bands(
 	"""
 	lesson6比lesson5增加了一个查询用的q，且使用Query（max_length=10）来限制查询参数q的长度
 	使用案例如：127.0.0.1:8000/bands?q=beatles
-	止于Query是如何实现的？请看fastapi源码
+	止于Query是如何实现的？请看fastapi源码，我是看不下去，你可以试试：）
 	"""
 	band_list = [BandWithID(**band) for band in BANDS]
 
