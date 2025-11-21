@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  alembic-demo:
+    image:  docker.1ms.run/postgres:latest
+    container_name: alembic-demo
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: secret
+    restart: unless-stopped

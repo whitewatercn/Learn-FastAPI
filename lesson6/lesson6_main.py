@@ -30,7 +30,7 @@ BANDS= [
 @app.get("/bands",)
 async def bands(
 	genre:GeneralURLChoices | None = None,
-	q: Annotated[str | None, Query(max_length=10)] = None,
+	q: Annotated[str | None, Query(max_length=5)] = None,
 )  -> list[BandWithID]:
 	"""
 	lesson6比lesson5增加了一个查询用的q，且使用Query（max_length=10）来限制查询参数q的长度
